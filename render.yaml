@@ -1,0 +1,21 @@
+# Render.com deployment configuration
+services:
+  - type: web
+    name: infast-crm-backend
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false  # Bu qiymatni manual qo'shishingiz kerak
+      - key: JWT_SECRET
+        sync: false  # Bu qiymatni manual qo'shishingiz kerak
+      - key: FRONTEND_URL
+        sync: false  # Railway'dan kelgan frontend URL
+
