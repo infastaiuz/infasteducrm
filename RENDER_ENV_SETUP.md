@@ -136,3 +136,4 @@ Agar service ishlamasa:
 3. CORS xatosi bo'lsa - FRONTEND_URL ni tekshiring
 4. 401 xatosi bo'lsa - JWT_SECRET ni tekshiring
 
+
