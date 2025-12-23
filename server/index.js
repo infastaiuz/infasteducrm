@@ -48,13 +48,32 @@ const createDefaultAdmin = async () => {
 };
 
 // Middleware
-app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    process.env.FRONTEND_URL,
-  ].filter(Boolean),
+const allowedOrigins = [
+  'http://localhost:3000',
+  process.env.FRONTEND_URL,
+  'https://infast-crm.vercel.app'
+].filter(Boolean);
+
+const corsOptions = {
+  origin: (incomingOrigin, callback) => {
+    if (!incomingOrigin) {
+      // Allow server-to-server or tools like curl/postman without origin header.
+      return callback(null, true);
+    }
+
+    const matchesAllowedDomain =
+      allowedOrigins.includes(incomingOrigin) || incomingOrigin.endsWith('.vercel.app');
+
+    if (matchesAllowedDomain) {
+      return callback(null, true);
+    }
+
+    callback(new Error(`CORS policy blocked request from ${incomingOrigin}`));
+  },
   credentials: true
-}));
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Database connection
